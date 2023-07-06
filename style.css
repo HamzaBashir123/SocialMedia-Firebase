@@ -1,0 +1,263 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+                    /* Main Div  */
+.main{
+    background: rgba(211, 211, 211, 0.281);
+    height: 100vh;
+    display: flex;
+    width: 100%;
+    justify-content: center !important;
+    align-items: center;
+    position: relative;
+}
+
+                    /* brightness Div  */
+
+
+.brigth{
+    display: none;
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.575);
+    z-index: 1;
+}
+
+                        /* right half poetion login page */
+
+.right{
+  height: 400px;
+  /* background-color: #1876f23a !important; */
+}
+.rightChild{
+    width: 65%;
+    height: 90%;
+    background-color: white;
+    margin-left: 20px;
+    border: 2px solid gray;
+    box-shadow: 5px 5px 10px grey;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    justify-content: center;
+    
+
+}
+.rightChild a{
+    text-align: center;
+}
+.CreateButton{
+    display: flex;
+    justify-content: center;
+}
+.rightChild input{
+    z-index: 1;
+    margin-top: 15px;
+    line-height: 45px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding-left: 10px;
+
+
+}
+.rightChild button{
+    z-index: 1;
+    margin: 15px 0px;
+    line-height: 45px;
+    border-radius: 5px;
+    color: white;
+    background-color: #1877f2;
+    border: none;
+    font-weight: bolder;
+    font-size: larger;
+}
+.rightChild button:hover{
+    background-color: #1876f29d;
+}
+.CreateAccount{
+    z-index: 1;
+    background-color: #42b72a !important;
+    padding: 2px 20px !important;
+    
+}
+.CreateAccount:hover{
+    background-color: #42b72a86 !important;
+}
+.right2ndChild{
+    width: 60%;
+    margin-left: 20px;
+    /* text-align: center; */
+    /* background-color: aquamarine; */
+    margin-top: 10px;
+    
+    
+
+}
+.right2ndChild a{
+text-decoration: none;
+color: black;
+font-weight: bolder;
+
+
+}
+.right2ndChild a:hover{
+    text-decoration: underline;
+    
+    }
+
+                /* left portion facebook heading  */
+.left{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    /* background: rgba(211, 211, 211, 0.281); */
+
+}
+.leftChild{
+    width: 70%;
+    margin-right: 20px;
+    /* background-color: aqua; */
+    text-align: start;
+}
+.leftChild h1{
+    font-size: 60px;
+    color: #1877f2;
+    font-weight: bold;
+}
+.leftChild p{
+    font-size: 30px;
+}
+
+
+
+                /* posstion absulote portion  signUp form */
+
+.signUpMain{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.createPage{
+    display: none;
+    z-index: 1;
+    border: none;
+    box-shadow: 2px 2px 20px grey;
+    border-radius: 10px;
+    height: 580px;
+    width: 450px;
+    /* border: 2px solid grey; */
+    background-color: white;
+    padding: 15px;
+}
+.upperDiv{
+    position: relative;
+    
+
+
+}
+.upperDiv h1{
+    margin: 5px;
+    line-height: 20px;
+}
+.crossIcon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 20px;
+    width: 20px;
+}
+.upperDiv p{
+    margin: 5px;
+}
+.crossIcon:hover{
+    cursor: pointer;
+    
+
+}
+.crossIcon:active{
+    height: 15px;
+    width: 15px;
+}
+
+
+.firstSecondnameRow{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.firstname,  .lastname{
+    width: 47%;
+    padding: 7px;
+    border-radius: 7px;
+    border: 1px solid grey;
+}
+.firstname:focus, .lastname:focus , .cellNumber:focus, .passWord:focus{
+    outline: none;
+    border: 1px solid red;
+
+}
+.mobileNumber, .pass{
+    margin-top: 12px;
+}
+
+.cellNumber, .passWord{
+    width: 100%;
+    padding: 7px;
+    border-radius: 7px;
+    border: 1px solid grey;
+}
+
+.dateOFBirth{
+    display: flex;
+    justify-content: space-between;
+}
+.dateOFBirth select{
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.genderSec{
+    display: flex;
+    justify-content: space-between;
+}
+.genderSec div{
+    border: 1px solid grey;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 5px;
+    padding-right: 10px;
+
+}
+.textArea p{
+    font-size: 12px;
+
+}
+.submitSec{
+    display: flex;
+    justify-content: center;
+}
+.signUp{
+    background-color: #42b72a ;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+    padding: 5px 70px;
+    border-radius: 5px;
+    border: none;
+    padding-bottom: 7px;
+}
+.signUp:hover{
+    background-color: rgba(0, 128, 0, 0.452);
+}
+

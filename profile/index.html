@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Font-Awesome-Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div class="container-fluid p-0">
+      <navbar class="container-fluid navbarDiv d-flex">
+        <div class="iconSearvhButton">
+          <img class="homePage" src="./assset/facebookicon.png" alt="" />
+          <input type="text" name="" id="" placeholder="Search Facebook" />
+          <!-- <button>Search</button> -->
+        </div>
+        <div class="centerDiv">
+          <i class="fa-solid fa-house" style="color: white"></i>
+          <img src="./assset/watch.png" alt="" />
+          <i class="fa-solid fa-shop" style="color: white; cursor: pointer"></i>
+          <i
+            class="fa-solid fa-user-group"
+            style="color: white; cursor: pointer"
+          ></i>
+          <img
+            src="./assset/Gamehandle.png"
+            style="width: 45px; height: 45px"
+          />
+        </div>
+        <div class="lastDiv">
+          <div>
+            <img
+              src="./assset/my Post.png"
+              alt=""
+              style="width: 25px; height: 25px"
+              class="porfilePage"
+            />
+          </div>
+          <div>
+            <img
+              src="./assset/messanger.png"
+              alt=""
+              style="width: 20px; height: 20px"
+            />
+          </div>
+          <div>
+            <img
+              src="./assset/notificaiton.png"
+              alt=""
+              style="width: 20px; height: 20px"
+            />
+          </div>
+          <div class="logout">
+            <img
+              src="./assset/profile.png"
+              alt=""
+              title="Log Out"
+              style="width: 20px; height: 20px"
+            />
+          </div>
+        </div>
+      </navbar>
+
+      <div class="bodyPageMain">
+        <!--1sd part -->
+
+        <div class="leftDiv">
+          <!-- <div class="itemImgName">
+                <img src="./assset/profile.png" alt="" style="height: 40px; width: 40px; font-weight:bold;">
+                <p>Muhammd Hamza</p>
+            </div> -->
+
+          <!--2nd part -->
+        </div>
+        <div class="centerDivMain">
+          <div class="centerDivMainContainer container">
+            <div class="upperDiv">
+              <img src="./assset/profile.png" alt="" />
+              <input class="placeholderName" type="text" placeholder="What's on your mind, Muhammad" />
+              <button onclick="postHandler()" >Post</button>
+            </div>
+            <hr class="text-white" />
+            <div class="centerDivMainLastDiv">
+              <div class="">
+                <img src="./assset/gallery.png" alt="" /><span>Photo</span>
+              </div>
+              <div>
+                <img src="./assset/playButton.png" alt="" /><span>Video</span>
+              </div>
+              <div>
+                <img src="./assset/calender.png" alt="" /><span>Event</span>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Post Div -->
+
+
+          <div class="postDiv container p-0">
+            <!-- <div class="postDivUpper">
+              <div class="d-flex">
+                <div class="postProfileImg">
+                  <img src="./assset/profile.png" alt="" />
+                </div>
+                <div class="postNameDateTime">
+                  <h4 class="ProfileName">Muhammad Hamza</h4>
+                  <span>2023-06-06</span><span> at</span>
+                  <span>1:47 Am</span>
+                </div>
+              </div>
+              <div class="postDivEditDelete">
+                <img src="./assset/3Dots.png" alt="" />
+                <img src="./assset/cross.png" alt="" />
+              </div>
+            </div>
+            <h6 class="m-3 text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas recusandae odit sed. Blanditiis ad vel, doloremque, perspiciatis nulla, praesentium quo architecto ut beatae itaque veniam aspernatur provident neque. Esse, corrupti.</h6>
+            <div class="postDivImg">
+              <img class="postImg" src="./assset/postPic.jpg" alt="">
+            </div>
+            <div class="likeLogoCounterComment d-flex justify-content-between">
+              <div class="d-flex">
+                <img class="m-1" src="./assset/like.png" alt="" style="width: 20px ; height: 20px;" >
+                <h6 class="text-white">1</h6>
+              </div>
+              <div class="d-flex text-white">
+                <h6 class="text-white"> 1 </h6>&ThinSpace;
+                <span>comment</span>&ThinSpace;
+                <span>.</span>&ThinSpace;
+                <h6>2</h6>&ThinSpace;
+                <span>reposts</span>
+
+              </div>
+            </div>
+            <div class="d-flex justify-content-evenly text-white my-4 commentBox">
+              <div><img src="./assset/likeShow.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Like</div>
+              <div><img src="./assset/comment.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Comment</div>
+              <div><img src="./assset/repost.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Repost</div>
+              <div><img src="./assset/send.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Send</div>
+              
+            </div>
+            <div class="postCommentLastDiv">
+              <img src="./assset/profile.png" alt="" />
+              <input type="text" placeholder="Write a comment..." />
+              <button>Post</button>
+            </div> -->
+         
+          </div>
+          
+          <br><br><br>
+
+
+
+        </div>
+
+        <!-- 3rd part -->
+
+        <div class="rightDiv">
+          
+          <!-- <div class="itemImgName">
+            <img
+              src="./assset/profile.png"
+              alt=""
+              style="height: 40px; width: 40px; font-weight: bold"
+            />
+            <p>Muhammd Hamza</p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- javaScript  -->
+    <script src="./app.js"></script>
+
+    <!-- BootStrap  -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
