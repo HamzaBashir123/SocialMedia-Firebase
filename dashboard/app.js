@@ -1,4 +1,11 @@
-const isLoggedInUser = JSON.parse(localStorage.getItem("isLoggedInUser"));
+import {
+  auth,
+  db,
+  doc,
+  getDoc,
+  onAuthStateChanged,
+  signOut
+} from '../firebase.Config.js'
 
 let logout = document.querySelector(".logout");
 let leftDiv = document.querySelector(".leftDiv");
@@ -6,11 +13,53 @@ let rightDiv = document.querySelector(".rightDiv");
 let placeholderName = document.querySelector(".placeholderName");
 let porfilePage = document.querySelector(".porfilePage");
 let homePage = document.querySelector(".homePage");
+let postBtm = document.querySelector(".postBtm");
+
+postBtm.addEventListener('click', getUserData)
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      const uid = user.uid;
+      console.log(uid)
+      getUserData(uid)
+      // ...
+  } else {
+      // User is signed out
+      // ...
+      console.log("sign out")
+      window.location.href = '../login/login.html'
+  }
+});
+
+
+async function getUserData(uid) {
+  try {
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          const { userName, lastName, firstName, phNum, email } = docSnap.data()
+          userNameHTML.textContent = userName
+          emailAddressHTML.textContent = email
+          mobNumHTML.textContent = phNum
+          firstNameHTML.textContent = firstName
+          lastNameHTML.textContent = lastName
+      } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  } catch (error) {
+      console.log(error, "==>>error in get User Data")
+  }
+}
 
 
 const postDiv = document.querySelector(".postDiv");
 
-const [first, last] = [isLoggedInUser.firstName, isLoggedInUser.surName];
+// const [first, last] = [isLoggedInUser.firstName, isLoggedInUser.surName];
 const firstName =
   first.slice(0, 1).toUpperCase() + first.slice(1).toLowerCase();
 const lastName = last.slice(0, 1).toUpperCase() + last.slice(1).toLowerCase();

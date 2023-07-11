@@ -1,27 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { auth,db ,setDoc ,doc, createUserWithEmailAndPassword, signInWithEmailAndPassword} from './firebase.Config.js'
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA_DRp6Ug-ZrxKy5LLMBMDDqXuvfUbvyyU",
-  authDomain: "social-media-70e81.firebaseapp.com",
-  projectId: "social-media-70e81",
-  storageBucket: "social-media-70e81.appspot.com",
-  messagingSenderId: "150864508831",
-  appId: "1:150864508831:web:9ed47017c9cde032a66faa",
-};
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 const brigth = document.querySelector(".brigth");
 const crossIcon = document.querySelector(".crossIcon");
@@ -63,14 +42,14 @@ const gender = document.getElementsByName("inlineRadioOptions");
 // let date;
 // let month;
 // let year;
-// let gender;
+let genValue;
 
 signUp.addEventListener("click", signUpHandler);
 
 //          Sign Up function
-
+ 
 function signUpHandler() {
-  let genValue;
+  
   for (let i = 0; i < gender.length; i++) {
     if (gender[i].checked) {
       genValue = gender[i].value;
@@ -90,39 +69,45 @@ function signUpHandler() {
   //     }
   //     users.push(userObj)
   //     localStorage.setItem('users', JSON.stringify(users))
+  
+
+      
   createUserWithEmailAndPassword(auth, cellNumber.value, passWord.value)
     .then((userCredential) => {
       const user = userCredential.user;
       if (user) {
-          console.log("User signup successfully");
-          addUserHandler();
+          console.log(user ,"User signup successfully");
+          console.log(user.uid)
+          addUserHandler(user.uid);
       }
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorCode);
-      console.log(errorMessage);
+     alert(errorCode)
     });
 }
-async function addUserHandler() {
+
+async function addUserHandler(uid) {
     try {
-        console.log("mila gaya")
-        const docRef = await addDoc(collection(db, "users"), {
+        console.log(uid ,"mila gaya")
+         await setDoc(doc(db, "users",uid), {
             username: firstname.value,
-            email: cellNumber.value
+            surname : Surname.value,
+            email: cellNumber.value,
+            dateOfBirth: new Date(`${year.value}-${month.value}-${day.value}`),
+            gender: genValue,
+
+            
 
         });
-        
-    console.log("Document written with ID: ", docRef.id);
-    if (docRef.id) {
-      console.log("document is saved");
-    //   firstname.value = "";
-    //   Surname.value = "";
-    //   cellNumber.value = "";
-    //   passWord.value = "";
-    //   signUpClosed();
-    }
+      alert("SignUp Successfully")
+      firstname.value = "";
+      Surname.value = "";
+      cellNumber.value = "";
+      passWord.value = "";
+      signUpClosed();
+    
   } catch (e) {
     console.error("Error adding document: ", e);
   }
