@@ -20,9 +20,14 @@ let porfilePage = document.querySelector(".porfilePage");
 let homePage = document.querySelector(".homePage");
 let postBtm = document.querySelector(".postBtm");
 let home = document.querySelector(".home");
+let allUsers = document.querySelector(".allUsers");
 
 
 
+allUsers.addEventListener("click", ()=>{
+  
+  window.location.href = "../usersPage/usersPage.html"
+})
 home.addEventListener("click", ()=>{
   
   window.location.href = "./index.html"

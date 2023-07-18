@@ -1,36 +1,54 @@
-import {auth, db, app, getFirestore, collection, query, where, getDocs, createUserWithEmailAndPassword} from '../firebaseConfig.js'
 
-const myUsersArea = document.querySelector('.myUsersArea')
+import {
+    auth,
+    db,
+    app,
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    createUserWithEmailAndPassword,
+} from "../firebase.Config.js";
+const bodyPageMain = document.querySelector(".bodyPageMain");
+let home = document.querySelector(".home");
+let allUsers = document.querySelector(".allUsers");
 
+allUsers.addEventListener("click", () => {
+  window.location.href = "./usersPage.html";
+});
+home.addEventListener("click", () => {
+  window.location.href = "../dashboard/index.html";
+});
 
 async function getAllUsers() {
-    const q = query(collection(db, "users"));
+  const q = query(collection(db, "users"));
 
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        const {userName, email, phNum} = doc.data()
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    const { username, email, surname ,gender} = doc.data();
 
-        const columnHtml = document.createElement('div')
-        columnHtml.setAttribute('class', 'col')
-        
-        const content = `
-        <div class="col">
+    const columnHtml = document.createElement("div");
+    columnHtml.setAttribute("class", "col m-3 userDiv");
+
+    const content = `
+        <div class="col innerContent">
         <div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">${userName}</h5>
-                <p class="card-text">User Email: ${email} <br/> User Phone: ${phNum}</p>
+                <h5 class="card-title">${username} ${surname}</h5>
+                <p class="card-text">User Email: ${email} <br/> Gender: ${gender}</p>
                 <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
     </div>
-        `
-        columnHtml.innerHTML = content
+        `;
+    columnHtml.innerHTML = content;
 
-        myUsersArea.appendChild(columnHtml)
-    });
+    bodyPageMain.appendChild(columnHtml);
+  });
 }
 
-getAllUsers()
+getAllUsers();
