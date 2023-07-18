@@ -100,6 +100,7 @@
 
 .bodyPageMain{
     display: flex;
+ 
 }
 
 
@@ -199,7 +200,7 @@
   
   /* Handle on hover */
   .rightDiv::-webkit-scrollbar-thumb:hover {
-    background: #b30000; 
+    background: green; 
   }
 
             /* Center Div Main */
@@ -209,6 +210,8 @@
     /* display: flex; */
     width: 50%;
     margin-left: 25%;
+    margin-top: 50px;
+    
     /* border: 2px solid green; */
     
 

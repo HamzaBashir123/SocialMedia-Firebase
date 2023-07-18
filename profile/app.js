@@ -10,10 +10,10 @@ let homePage = document.querySelector(".homePage");
 
 const postDiv = document.querySelector(".postDiv");
 
-const [first, last] = [isLoggedInUser.firstName, isLoggedInUser.surName];
-const firstName =
-  first.slice(0, 1).toUpperCase() + first.slice(1).toLowerCase();
-const lastName = last.slice(0, 1).toUpperCase() + last.slice(1).toLowerCase();
+// const [first, last] = [isLoggedInUser.firstName, isLoggedInUser.surName];
+// const firstName =
+//   first.slice(0, 1).toUpperCase() + first.slice(1).toLowerCase();
+// const lastName = last.slice(0, 1).toUpperCase() + last.slice(1).toLowerCase();
 
 
 porfilePage.addEventListener('click',()=>{

@@ -35,5 +35,6 @@ export {
     getDocs,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    signOut
+    signOut,
+    
 };
