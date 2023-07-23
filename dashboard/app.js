@@ -9,6 +9,11 @@ import {
   addDoc,
   collection,
   getDocs,
+  storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+  
   
 } from "../firebase.Config.js";
 
@@ -38,6 +43,7 @@ getPosts()
 
 postBtm.addEventListener("click", postHandler);
 let currentLoggedInUser;
+let profilePicLocal ;
 
 //                     Authentication code
 
@@ -70,10 +76,13 @@ async function getUserData(uid) {
       const {
         username,
         surname: firebaseSurname,
+        profilePicture,
       } = docSnap.data();
 
-      leftCreateData(username, firebaseSurname);
-      placeholderNameSet(username, firebaseSurname);
+      profilePicLocal = profilePicture
+
+      leftCreateData(username, firebaseSurname, profilePicture);
+      placeholderNameSet(username, firebaseSurname, profilePicture);
       // userNameHTML.textContent = userName
       // emailAddressHTML.textContent = email
       // mobNumHTML.textContent = phNum
@@ -107,7 +116,7 @@ logout.addEventListener("click", logoutHandler);
 //                     placeholder Name set code
 
 
-function placeholderNameSet(username, firebaseSurname) {
+function placeholderNameSet(username, firebaseSurname, profilePicture) {
   username =
     username.slice(0, 1).toUpperCase() + username.slice(1).toLowerCase();
   firebaseSurname =
@@ -117,6 +126,7 @@ function placeholderNameSet(username, firebaseSurname) {
   document.querySelector(
     ".placeholderName"
   ).placeholder = `What's on your mind, ${username} ${firebaseSurname}`;
+  document.querySelector('.centerProfilepic').src = profilePicture
 }
 
 
@@ -126,7 +136,7 @@ function placeholderNameSet(username, firebaseSurname) {
 
 
 porfilePage.addEventListener("click", () => {
-  window.location.href = "../profile/index.html";
+  window.location.href = "../EditPage/usersPage.html";
 });
 homePage.addEventListener("click", () => {
   window.location.href = "../dashboard/index.html";
@@ -139,7 +149,8 @@ homePage.addEventListener("click", () => {
 //                     left sites  Name and pic create code
 
 
-function leftCreateData(firstName, firebaseSurname) {
+function leftCreateData(firstName, firebaseSurname, profilePicture) {
+  console.log(profilePicture)
   firstName =
     firstName.slice(0, 1).toUpperCase() + firstName.slice(1).toLowerCase();
   firebaseSurname =
@@ -147,7 +158,7 @@ function leftCreateData(firstName, firebaseSurname) {
     firebaseSurname.slice(1).toLowerCase();
 
   const objLeftDiv = [
-    { img: `profile.png`, text: `${firstName} ${firebaseSurname}` },
+    { img: `${profilePicture}`, text: `${firstName} ${firebaseSurname}` },
     { img: "friemds.png", text: "Friends" },
     { img: "recent.png", text: "Feeds (Most Recent)" },
     { img: "group.png", text: "Groups" },
@@ -160,14 +171,24 @@ function leftCreateData(firstName, firebaseSurname) {
     { img: "graph.png", text: "Ads Manager" },
   ];
 
-  const leftData = objLeftDiv.map((item) => {
+  const leftData = objLeftDiv.map((item,index) => {
+    
     return `  <div class="itemImgName">
-    <img src="./assset/${item.img}" alt="" style="height: 40px; width: 40px; font-weight:bold;">
+    <img class="leftItemImg${index}" src="./assset/${item.img}" alt="" style="height: 40px; width: 40px; font-weight:bold;">
     <p>${item.text}</p>
 </div>`;
   });
   leftDiv.innerHTML = leftData.join("");
+
+  const profileImgGet =  document.querySelector(".leftItemImg0");
+console.log(profileImgGet.src= profilePicture)
 }
+
+
+
+
+
+
 
 //                     right sites  Name and pic create code
 
@@ -208,12 +229,67 @@ placeholderName.addEventListener("keypress", (e) => {
   }
 });
 
+
+const uploadPic  = document.querySelector('.uploadPic')
+
 async function postHandler() {
-  console.log(placeholderName.value)
+
+  const file = uploadPic.files[0]
+  console.log(file)
+
+    /** @type {any} */
+    const metadata = {
+      contentType: 'image/jpeg'
+  };
+
+  // Upload file and metadata to the object 'images/mountains.jpg'
+  const storageRef = ref(storage, 'Post/' + file.name); 
+  const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+
+  // Listen for state changes, errors, and completion of the upload.
+  uploadTask.on('state_changed',
+      (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+              case 'paused':
+                  console.log('Upload is paused');
+                  break;
+              case 'running':
+                  console.log('Upload is running');
+                  break;
+          }
+      },
+      (error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+              case 'storage/unauthorized':
+                  // User doesn't have permission to access the object
+                  break;
+              case 'storage/canceled':
+                  // User canceled the upload
+                  break;
+
+              // ...
+
+              case 'storage/unknown':
+                  // Unknown error occurred, inspect error.serverResponse
+                  break;
+          }
+      },
+      () => {
+          // Upload completed successfully, now we can get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+              console.log('File available at', downloadURL);
+  // console.log(placeholderName.value)
   try {
     const response = await addDoc(collection(db, "posts"), {
       postContent: placeholderName.value,
       authorId: currentLoggedInUser,
+      postImageUrl: downloadURL,
       date: new Date().toLocaleDateString(),
       time: new Date().toLocaleTimeString()
     });
@@ -224,6 +300,9 @@ async function postHandler() {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
+});
+      }
+  )
   
 }
 async function getPosts(){
@@ -234,7 +313,7 @@ async function getPosts(){
     querySnapshot.forEach(async (doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
-        const { authorId, postContent,date,time } = doc.data()
+        const { authorId, postContent,date,time ,postImageUrl } = doc.data()
         // console.log(authorId ,"=====> post Id " )
         // console.log(postContent ,"=====> post content ")
 
@@ -247,7 +326,7 @@ async function getPosts(){
     div1.innerHTML = `<div class="postDivUpper">
     <div class="d-flex">
       <div class="postProfileImg">
-        <img src="./assset/profile.png" alt="" />
+        <img src=${profilePicLocal|| "./assset/profile.png" } alt="" />
       </div>
     <div class="postNameDateTime">
       <h4 class="ProfileName">${username} ${surname}</h4>
@@ -262,7 +341,7 @@ async function getPosts(){
 </div>
 <h6 class="m-3 text-white">${postContent}</h6>
 <div class="postDivImg">
-  <img class="postImg" src="./assset/postPic.jpg" alt="">
+  <img class="postImg" src= ${postImageUrl || "./assset/postPic.jpg"} alt="">
 </div>
 <div class="likeLogoCounterComment d-flex justify-content-between">
   <div class="d-flex">
@@ -293,17 +372,7 @@ async function getPosts(){
 `;
   postDiv.appendChild(div1);
 
-  // const postObj = {
-  //     userName: `${firstName} ${lastName}`,
-  //     userNumber: isLoggedInUser.mobileNum,
-  //     postContent: placeholderName.value,
-  //     date: new Date().toLocaleDateString(),
-  //     time: new Date().toLocaleTimeString(),
-  //   };
   
-  //   posts.push(postObj);
-  
-    // localStorage.setItem('posts', JSON.stringify(posts))
   
     placeholderName.value = "";
   
