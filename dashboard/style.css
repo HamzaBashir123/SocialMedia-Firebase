@@ -267,6 +267,10 @@
 .upperDiv button:hover{
     background-color: #242526e8;
 }
+
+.postPic{
+    border-radius: 100%;
+}
 .centerDivMainLastDiv{
     display: flex;
     justify-content: space-around;
@@ -300,6 +304,9 @@
 
 }
 
+.uploadPic{
+    display: none;
+}
 
 
                 /* Post Div */
@@ -441,4 +448,69 @@
     /* padding: 10px; */
     /* border: 2px solid green; */
     border-radius: 10px;
+}
+
+.postEditButton{
+    background: transparent !important;
+}
+
+.popUPCapturefullScreen{
+    
+    position: absolute;
+    inset: 0;
+    height: 100vh;
+    display: flex ;
+    justify-content: center ;
+    align-items: center;
+    /* border: 3px solid red; */
+    display: none;
+    
+}
+.popUpWindow{
+    /* display: none; */
+    padding: 5px;
+    border-radius: 10px;
+    height: 400px;
+    width: 500px;
+    /* border: 3px solid red; */
+    background-color:grey;
+    position: fixed;
+    top: 40%;
+    left: 35%;
+    margin-left: -50px;
+    margin-top: -50px;
+
+}
+.popUpButton{
+    width: 30%;
+    border-radius: 10px;
+    background: lightskyblue;
+
+    /* border: 3px solid red; */
+
+}
+.popUpCross{
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    /* border: 3px solid red; */
+    cursor: pointer;
+
+
+}
+.popUpCross:active{
+    scale: 1.1;
+}
+.textArea{
+    border-radius: 5px;
+    padding: 5px;
+    background-color:grey;
+    color: white;
+}
+.postImageChange{
+    border-radius: 10px;
+    margin-bottom: 10px;
 }

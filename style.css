@@ -12,7 +12,18 @@
     justify-content: center !important;
     align-items: center;
     position: relative;
+  /* border: 2px solid red; */
+  /* background-image: url(./assets/Preview+Image.avif); */
+    /* background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover ; */
+    background-image: linear-gradient(to right, #000000b6 , #495052);
+
+  
+
 }
+
+
 
                     /* brightness Div  */
 
@@ -25,17 +36,42 @@
     inset: 0;
     background-color: rgba(255, 255, 255, 0.575);
     z-index: 1;
+    
 }
 
                         /* right half poetion login page */
 
 .right{
-  height: 400px;
-  /* background-color: #1876f23a !important; */
+  height: 500px;
+  /* border: 2px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+  justify-content: center;
+  /* border: 3px solid red; */
+
+
+  
+}
+/* background-color: #1876f23a !important; */
+
+.passShow{
+    z-index: 1;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    
+    right: 40px;
+    top: 120px;
+    cursor: pointer;
+    opacity: 0.8;
+    /* border: 10px solid red; */
 }
 .rightChild{
-    width: 65%;
-    height: 90%;
+    position: relative;
+    width: 30%;
+    height: 80%;
     background-color: white;
     margin-left: 20px;
     border: 2px solid gray;
@@ -44,6 +80,10 @@
     flex-direction: column;
     padding: 10px 20px;
     justify-content: center;
+    background-image: linear-gradient(to right, #000000e3 , #555e5f);
+    
+
+    
     
 
 }
@@ -70,7 +110,7 @@
     line-height: 45px;
     border-radius: 5px;
     color: white;
-    background-color: #1877f2;
+    background-color: #1876f2d0;
     border: none;
     font-weight: bolder;
     font-size: larger;
@@ -80,16 +120,26 @@
 }
 .CreateAccount{
     z-index: 1;
-    background-color: #42b72a !important;
+    background-color: #42b72ab2 !important;
     padding: 2px 20px !important;
     
 }
 .CreateAccount:hover{
     background-color: #42b72a86 !important;
 }
+.forgetPassword{
+    z-index: 1;
+    cursor: pointer;
+
+}
+
+
 .right2ndChild{
+    z-index: 1;
     width: 60%;
-    margin-left: 20px;
+    text-align: center;
+    color: white;
+    margin-right: 10px;
     /* text-align: center; */
     /* background-color: aquamarine; */
     margin-top: 10px;
@@ -121,7 +171,11 @@ font-weight: bolder;
     width: 70%;
     margin-right: 20px;
     /* background-color: aqua; */
-    text-align: start;
+    height: 500px;
+    width: 500px;
+    /* text-align: start; */
+    
+    
 }
 .leftChild h1{
     font-size: 60px;
@@ -143,7 +197,6 @@ font-weight: bolder;
     justify-content: center;
     align-items: center;
 }
-
 .createPage{
     display: none;
     z-index: 1;
@@ -155,6 +208,9 @@ font-weight: bolder;
     /* border: 2px solid grey; */
     background-color: white;
     padding: 15px;
+    background-image: linear-gradient(to right, #000000e3 , #555e5f);
+    color: white;
+
 }
 .upperDiv{
     position: relative;
@@ -261,3 +317,22 @@ font-weight: bolder;
     background-color: rgba(0, 128, 0, 0.452);
 }
 
+@media only screen and (max-width: 500px)  {
+    .rightChild {
+      width: 90% !important;
+      height: 90% !important;
+      
+    }
+    .passShow{
+        z-index: 1;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        
+        right: 40px;
+        top: 140px;
+        cursor: pointer;
+        opacity: 0.8;
+        /* border: 10px solid red; */
+    }
+  }

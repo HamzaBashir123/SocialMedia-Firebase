@@ -7,6 +7,18 @@ const crossIcon = document.querySelector(".crossIcon");
 const createPage = document.querySelector(".createPage");
 const CreateAccount = document.querySelector(".CreateAccount");
 const login = document.querySelector(".login");
+
+
+
+
+function showPass() {
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+  } else {
+    passwordInput.type = "password";
+  }
+}
+window.showPass = showPass;
 // const rightChild = document.querySelector(".rightChild");
 // console.log(rightChild)
 

@@ -35,12 +35,12 @@ async function getAllUsers() {
 
     const content = `
         <div class="col innerContent">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 100%;">
             <img src="..." class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${username} ${surname}</h5>
                 <p class="card-text">User Email: ${email} <br/> Gender: ${gender}</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="#" class="btn btn-secondary">Follow</a>
             </div>
         </div>
     </div>

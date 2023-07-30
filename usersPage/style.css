@@ -103,6 +103,8 @@
     flex-wrap: wrap;
     padding: 50px;
     padding-top: 100px;
+    
+
  
 }
 .userDiv{
@@ -111,8 +113,14 @@
     height: 300px;
 }
 .innerContent{
-    /* border: 3px solid red; */
+    width: 250px;
     height: 300px
     
 }
+.card-body{
+    /* border: 3px solid red; */
+    background-image: linear-gradient(to right, #000000e3 , #555e5f);
+   color: white !important;
 
+
+}

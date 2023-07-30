@@ -19,6 +19,10 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&family=Lato:ital,wght@1,100&family=Poppins&display=swap" rel="stylesheet">
     <title>Dashboard</title>
   </head>
   <body>
@@ -101,7 +105,8 @@
             <hr class="text-white" />
             <div class="centerDivMainLastDiv">
               <div class="d-flex">
-                <img  src="./assset/gallery.png" alt="" /><input class="uploadPic" type="file">Photo
+                <label for="input_image">
+                <img  src="./assset/gallery.png" alt="" />Images</label><input  class="uploadPic" type="file" id="input_image" accept=".jpg, .jpeg, .png ">
               </div>
               <div>
                 <img src="./assset/playButton.png" alt="" /><span>Video</span>
@@ -111,8 +116,7 @@
               </div>
             </div>
           </div>
-
-
+         
 
           <!-- Post Div -->
 
@@ -186,6 +190,22 @@
             <p>Muhammd Hamza</p>
           </div> -->
         </div>
+      </div>
+      <div class="popUPCapturefullScreen">
+        <div class="popUpWindow">
+          <img class="popUpCross" src="./assset/cross.png" alt="" />
+        <textarea name="comment" id="" cols="55" rows="3" class="textArea"></textarea>
+        <img class="postImageChange" src="" alt="" height="60%" width="100%">
+        
+          <div class="d-flex justify-content-around">
+            <label for="pop_image">
+            <img  src="./assset/gallery.png" alt="" />Images</label><input  class="uploadPic" type="file" id="pop_image" accept=".jpg, .jpeg, .png ">
+            <button class="popUpButton" onclick="updateData()">Update</button>
+          </div>
+       
+
+        </div>
+
       </div>
     </div>
 
