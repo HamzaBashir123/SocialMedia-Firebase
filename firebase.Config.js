@@ -24,6 +24,9 @@ import {
   getDoc,
   deleteDoc,
   updateDoc,
+  serverTimestamp,
+  orderBy,
+  
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -64,4 +67,7 @@ export {
   getDownloadURL,
   deleteDoc,
   updateDoc,
+  serverTimestamp,
+  orderBy
+  
 };

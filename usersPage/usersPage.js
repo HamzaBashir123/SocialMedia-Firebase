@@ -13,12 +13,17 @@ import {
 const bodyPageMain = document.querySelector(".bodyPageMain");
 let home = document.querySelector(".home");
 let allUsers = document.querySelector(".allUsers");
+let porfilePage = document.querySelector(".porfilePage");
 
 allUsers.addEventListener("click", () => {
   window.location.href = "./usersPage.html";
 });
 home.addEventListener("click", () => {
   window.location.href = "../dashboard/index.html";
+});
+
+porfilePage.addEventListener("click", () => {
+  window.location.href = "../EditPage/usersPage.html";
 });
 
 async function getAllUsers() {

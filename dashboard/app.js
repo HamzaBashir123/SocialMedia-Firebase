@@ -15,7 +15,11 @@ import {
   getDownloadURL,
   deleteDoc,
   updateDoc,
+  serverTimestamp,
+  query,
+  orderBy,
 } from "../firebase.Config.js";
+// console.log(serverTimestamp)
 
 let logout = document.querySelector(".logout");
 let leftDiv = document.querySelector(".leftDiv");
@@ -40,7 +44,6 @@ getPosts();
 postBtm.addEventListener("click", postHandler);
 let currentLoggedInUser;
 let profilePicLocal;
-let editPostFlag = false;
 let postIdGlobal;
 
 //                     Authentication code
@@ -123,7 +126,7 @@ function placeholderNameSet(username, firebaseSurname, profilePicture) {
   document.querySelector(
     ".placeholderName"
   ).placeholder = `What's on your mind, ${username} ${firebaseSurname}`;
-  document.querySelector(".centerProfilepic").src = profilePicture;
+  document.querySelector(".centerProfilepic").src = profilePicture || './assset/profile.png';
 }
 
 porfilePage.addEventListener("click", () => {
@@ -141,11 +144,9 @@ function leftCreateData(firstName, firebaseSurname, profilePicture) {
   firebaseSurname =
     firebaseSurname.slice(0, 1).toUpperCase() +
     firebaseSurname.slice(1).toLowerCase();
-  // console.log(profilePicture);
+  
   const objLeftDiv = [
-    {
-      img: `${profilePicture != "undefined" ? profilePicture : "profile.png"} `,
-      text: `${firstName} ${firebaseSurname}`,
+    {img: "profile.png", text:`${firstName} ${firebaseSurname}`,
     },
     { img: "friemds.png", text: "Friends" },
     { img: "recent.png", text: "Feeds (Most Recent)" },
@@ -168,7 +169,7 @@ function leftCreateData(firstName, firebaseSurname, profilePicture) {
   leftDiv.innerHTML = leftData.join("");
 
   const profileImgGet = document.querySelector(".leftItemImg0");
-  profileImgGet.src = profilePicture;
+  profileImgGet.src =   profilePicture || './assset/profile.png' ;
 }
 
 //                     right sites  Name and pic create code
@@ -267,8 +268,9 @@ async function postHandler() {
             postContent: placeholderName.value,
             authorId: currentLoggedInUser,
             postImageUrl: downloadURL,
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(),
+            time: serverTimestamp(),
+            // date: new Date().toLocaleDateString(),
+            // time: new Date().toLocaleTimeString(),
           });
 
           // console.log(response.id)
@@ -284,13 +286,15 @@ async function postHandler() {
 
 async function getPosts() {
   postDiv.innerHTML = "";
-  const querySnapshot = await getDocs(collection(db, "posts"));
+  const postsCollectionRef = collection(db, "posts");
+  const sortedQuery = query(postsCollectionRef, orderBy("time", "desc"));
 
+  const querySnapshot = await getDocs(sortedQuery);
   querySnapshot.forEach(async (doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, " => ", doc.data());
     let postId = doc.id;
-    const { authorId, postContent, date, time, postImageUrl } = doc.data();
+    const { authorId, postContent, time, postImageUrl } = doc.data();
     // console.log(doc.id ,"=====> post Id " )
     // console.log(postContent ,"=====> post content ")
 
@@ -301,6 +305,9 @@ async function getPosts() {
       surname.slice(0, 1).toUpperCase() + surname.slice(1).toLowerCase();
 
     // console.log(authorDetails)
+    let setTime = new Date(time.seconds * 1000);
+    // console.log(setTime.toString().split('GMT')[0]);
+     let dateTime = setTime.toString().split('GMT')[0]
 
     var div1 = document.createElement("div");
     div1.setAttribute("class", "appendDiv");
@@ -313,8 +320,7 @@ async function getPosts() {
       </div>
     <div class="postNameDateTime">
       <h4 class="ProfileName">${username} ${surname}</h4>
-      <span>${date}</span><span> at</span>
-      <span>${time}</span>
+      <span>${dateTime}</span>
     </div>
   </div>
   <div class="postDivEditDelete">

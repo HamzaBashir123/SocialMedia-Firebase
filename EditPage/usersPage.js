@@ -13,6 +13,16 @@ const profilePicture = document.getElementById('profilePicture')
 const editBtn = document.getElementById('editBtn')
 let currentLoggedInUser;
 
+const bodyPageMain = document.querySelector(".bodyPageMain");
+let home = document.querySelector(".home");
+let allUsers = document.querySelector(".allUsers");
+
+allUsers.addEventListener("click", () => {
+  window.location.href = "../usersPage/usersPage.html";
+});
+home.addEventListener("click", () => {
+  window.location.href = "../dashboard/index.html";
+});
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
