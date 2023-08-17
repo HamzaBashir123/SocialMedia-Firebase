@@ -173,6 +173,13 @@
     
 }
 
+.itemImgName img{
+    border-radius: 50%;
+}
+.postImg{
+    /* display: none; */
+}
+
 
 .rightDiv{
     background-color: rgba(0, 0, 0, 0.829);

@@ -18,6 +18,7 @@ import {
   serverTimestamp,
   query,
   orderBy,
+  
 } from "../firebase.Config.js";
 // console.log(serverTimestamp)
 
@@ -45,6 +46,7 @@ postBtm.addEventListener("click", postHandler);
 let currentLoggedInUser;
 let profilePicLocal;
 let postIdGlobal;
+
 
 //                     Authentication code
 
@@ -126,7 +128,8 @@ function placeholderNameSet(username, firebaseSurname, profilePicture) {
   document.querySelector(
     ".placeholderName"
   ).placeholder = `What's on your mind, ${username} ${firebaseSurname}`;
-  document.querySelector(".centerProfilepic").src = profilePicture || './assset/profile.png';
+  document.querySelector(".centerProfilepic").src =
+    profilePicture || "./assset/profile.png";
 }
 
 porfilePage.addEventListener("click", () => {
@@ -144,10 +147,9 @@ function leftCreateData(firstName, firebaseSurname, profilePicture) {
   firebaseSurname =
     firebaseSurname.slice(0, 1).toUpperCase() +
     firebaseSurname.slice(1).toLowerCase();
-  
+
   const objLeftDiv = [
-    {img: "profile.png", text:`${firstName} ${firebaseSurname}`,
-    },
+    { img: "profile.png", text: `${firstName} ${firebaseSurname}` },
     { img: "friemds.png", text: "Friends" },
     { img: "recent.png", text: "Feeds (Most Recent)" },
     { img: "group.png", text: "Groups" },
@@ -169,38 +171,68 @@ function leftCreateData(firstName, firebaseSurname, profilePicture) {
   leftDiv.innerHTML = leftData.join("");
 
   const profileImgGet = document.querySelector(".leftItemImg0");
-  profileImgGet.src =   profilePicture || './assset/profile.png' ;
+  profileImgGet.src = profilePicture || "./assset/profile.png";
 }
 
 //                     right sites  Name and pic create code
 
-const objRightData = [
-  { img: `profile.png`, text: "Faryan Ahmed" },
-  { img: `profile.png`, text: "Muhammad Bilal" },
-  { img: `profile.png`, text: "Muhammad Shaban" },
-  { img: `profile.png`, text: "Muhammad shafeeq" },
-  { img: `profile.png`, text: "Muhammad Shayan" },
-  { img: `profile.png`, text: "Imran Shaikh" },
-  { img: `profile.png`, text: "Usama Ikram" },
-  { img: `profile.png`, text: "Moiz Rasheed" },
-  { img: `profile.png`, text: "Muhammad Saif" },
-  { img: `profile.png`, text: "Ali Ahmy" },
-  { img: `profile.png`, text: "Hammad Shah" },
-  { img: `profile.png`, text: "Muhammad Ashhad" },
-  { img: `profile.png`, text: "Muhammad Reyyan" },
-  { img: `profile.png`, text: "Muhammad Nabeel" },
-  { img: `profile.png`, text: "Ubaid Ur Rehman" },
-  { img: `profile.png`, text: "Yasir Hussain" },
-];
+// const objRightData = [
+//   { img: `profile.png`, text: "Faryan Ahmed" },
+//   { img: `profile.png`, text: "Muhammad Bilal" },
+//   { img: `profile.png`, text: "Muhammad Shaban" },
+//   { img: `profile.png`, text: "Muhammad shafeeq" },
+//   { img: `profile.png`, text: "Muhammad Shayan" },
+//   { img: `profile.png`, text: "Imran Shaikh" },
+//   { img: `profile.png`, text: "Usama Ikram" },
+//   { img: `profile.png`, text: "Moiz Rasheed" },
+//   { img: `profile.png`, text: "Muhammad Saif" },
+//   { img: `profile.png`, text: "Ali Ahmy" },
+//   { img: `profile.png`, text: "Hammad Shah" },
+//   { img: `profile.png`, text: "Muhammad Ashhad" },
+//   { img: `profile.png`, text: "Muhammad Reyyan" },
+//   { img: `profile.png`, text: "Muhammad Nabeel" },
+//   { img: `profile.png`, text: "Ubaid Ur Rehman" },
+//   { img: `profile.png`, text: "Yasir Hussain" },
+// ];
+// const rightData = objRightData.map((item) => {
+//   return `<div class="itemImgName ">
+//       <img src="./assset/${item.img}" alt="" style="height: 40px; width: 40px; font-weight:bold;">
+//       <p>${item.text}</p>
+//       <div class="onlineActive"></div>
+//   </div>`;
+// });
+// rightDiv.innerHTML = rightData.join("");
 
-const rightData = objRightData.map((item) => {
-  return `<div class="itemImgName">
-      <img src="./assset/${item.img}" alt="" style="height: 40px; width: 40px; font-weight:bold;">
-      <p>${item.text}</p>
-      <div class="onlineActive"></div>
-  </div>`;
-});
-rightDiv.innerHTML = rightData.join("");
+async function getAllUsers() {
+  const q = query(collection(db, "users"));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    if (currentLoggedInUser != doc.id) {
+      const { username , email, surname, gender, profilePicture } = doc.data();
+      let userName = username.slice(0, 1).toUpperCase() + username.slice(1).toLowerCase();
+      let surName = surname.slice(0, 1).toUpperCase() + surname.slice(1).toLowerCase();
+
+      const columnHtml = document.createElement("div");
+      columnHtml.setAttribute("class", "col m-3 userDiv");
+
+      const content = `<div class="itemImgName">
+    <img src="${
+      profilePicture || "./assset/profile.png"
+    }" alt="" style="height: 40px; width: 40px; font-weight:bold;">
+    <p>${userName} ${surName} </p>
+    <div class="onlineActive"></div>
+</div>`;
+      columnHtml.innerHTML = content;
+
+      rightDiv.appendChild(columnHtml);
+    }
+  });
+}
+
+getAllUsers();
 
 placeholderName.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
@@ -213,75 +245,105 @@ const uploadPic = document.querySelector(".uploadPic");
 async function postHandler() {
   let file = uploadPic.files[0];
   console.log(file);
-  file ? file : alert("Please select the picture");
+  // file ? file : alert("Please select the picture");
 
-  /** @type {any} */
-  const metadata = {
-    contentType: "image/jpeg",
-  };
+  if (file) {
+    /** @type {any} */
+    const metadata = {
+      contentType: "image/jpeg",
+    };
 
-  // Upload file and metadata to the object 'images/mountains.jpg'
-  const storageRef = ref(storage, "Post/" + file.name);
-  const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+    // Upload file and metadata to the object 'images/mountains.jpg'
+    const storageRef = ref(storage, "Post/" + file.name);
+    const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
-  // Listen for state changes, errors, and completion of the upload.
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-      switch (snapshot.state) {
-        case "paused":
-          console.log("Upload is paused");
-          break;
-        case "running":
-          console.log("Upload is running");
-          break;
-      }
-    },
-    (error) => {
-      // A full list of error codes is available at
-      // https://firebase.google.com/docs/storage/web/handle-errors
-      switch (error.code) {
-        case "storage/unauthorized":
-          // User doesn't have permission to access the object
-          break;
-        case "storage/canceled":
-          // User canceled the upload
-          break;
-
-        // ...
-
-        case "storage/unknown":
-          // Unknown error occurred, inspect error.serverResponse
-          break;
-      }
-    },
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-        console.log("File available at", downloadURL);
-        // console.log(placeholderName.value)
-        try {
-          const response = await addDoc(collection(db, "posts"), {
-            postContent: placeholderName.value,
-            authorId: currentLoggedInUser,
-            postImageUrl: downloadURL,
-            time: serverTimestamp(),
-            // date: new Date().toLocaleDateString(),
-            // time: new Date().toLocaleTimeString(),
-          });
-
-          // console.log(response.id)
-          getPosts();
-          placeholderName.value = "";
-        } catch (e) {
-          console.error("Error adding document: ", e);
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
         }
-      });
-    }
-  );
+      },
+      (error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
+
+          // ...
+
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+        }
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          console.log("File available at", downloadURL);
+          // console.log(placeholderName.value)
+          createPostWithImage(downloadURL);
+        });
+      }
+    );
+  } else {
+    createPostWithoutImage();
+  }
+}
+
+async function createPostWithImage(downloadURL) {
+  try {
+    let likeCounter =0;
+    const response = await addDoc(collection(db, "posts"), {
+      postContent: placeholderName.value,
+      authorId: currentLoggedInUser,
+      postImageUrl: downloadURL,
+      time: serverTimestamp(),
+      likeCount: likeCounter
+      // date: new Date().toLocaleDateString(),
+      // time: new Date().toLocaleTimeString(),
+    });
+
+    // console.log(response.id)
+    getPosts();
+    placeholderName.value = "";
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+async function createPostWithoutImage() {
+  try {
+    let likeCounter = 0;
+    const response = await addDoc(collection(db, "posts"), {
+      postContent: placeholderName.value,
+      authorId: currentLoggedInUser,
+      time: serverTimestamp(),
+      likeCount: likeCounter
+      // date: new Date().toLocaleDateString(),
+      // time: new Date().toLocaleTimeString(),
+    });
+
+    // console.log(response.id)
+    getPosts();
+    placeholderName.value = "";
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
 }
 
 async function getPosts() {
@@ -291,12 +353,13 @@ async function getPosts() {
 
   const querySnapshot = await getDocs(sortedQuery);
   querySnapshot.forEach(async (doc) => {
+    
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, " => ", doc.data());
     let postId = doc.id;
-    const { authorId, postContent, time, postImageUrl } = doc.data();
+    const { authorId, postContent, time, postImageUrl ,likeCount} = doc.data();
     // console.log(doc.id ,"=====> post Id " )
-    // console.log(postContent ,"=====> post content ")
+    console.log(likeCount ,"=====> post likeCount ")
 
     let { username, surname, profilePicture } = await getAuthorData(authorId);
     username =
@@ -307,16 +370,15 @@ async function getPosts() {
     // console.log(authorDetails)
     let setTime = new Date(time.seconds * 1000);
     // console.log(setTime.toString().split('GMT')[0]);
-     let dateTime = setTime.toString().split('GMT')[0]
+    let dateTime = setTime.toString().split("GMT")[0];
 
     var div1 = document.createElement("div");
     div1.setAttribute("class", "appendDiv");
     div1.innerHTML = `<div class="postDivUpper">
     <div class="d-flex">
       <div class="postProfileImg">
-        <img class="postPic" src=${
-          profilePicture || "./assset/profile.png"
-        } alt="" />
+        <img class="postPic" src=${profilePicture || "./assset/profile.png"} 
+        alt="" />
       </div>
     <div class="postNameDateTime">
       <h4 class="ProfileName">${username} ${surname}</h4>
@@ -330,15 +392,15 @@ async function getPosts() {
 </div>
 <h6 class="m-3 text-white">${postContent}</h6>
 <div class="postDivImg">
-  <img class="postImg" src= ${postImageUrl || "./assset/postPic.jpg"} alt="">
+<img class="postImg text-white" src="${postImageUrl}" alt="Please upload Post Image" ${postImageUrl ? '' : 'style="display: none;"'}>
 </div>
 <div class="likeLogoCounterComment d-flex justify-content-between">
   <div class="d-flex">
     <img class="m-1" src="./assset/like.png" alt="" style="width: 20px ; height: 20px;" >
-    <h6 class="text-white">1</h6>
+    <h6 class="text-white likeCounter">${likeCount || '0'}</h6>
   </div>
   <div class="d-flex text-white">
-    <h6 class="text-white"> 1 </h6>&ThinSpace;
+    <h6 class="text-white ">1</h6>&ThinSpace;
     <span>comment</span>&ThinSpace;
     <span>.</span>&ThinSpace;
     <h6>2</h6>&ThinSpace;
@@ -347,22 +409,41 @@ async function getPosts() {
   </div>
 </div>
 <div class="d-flex justify-content-evenly text-white my-4 commentBox">
-  <div><img src="./assset/likeShow.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Like</div>
+  <div onclick="likeHandler('${postId}')"><img src="./assset/likeShow.png"  alt="" style="width: 30px ; height: 30px;">&ThinSpace;Like</div>
   <div><img src="./assset/comment.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Comment</div>
   <div><img src="./assset/repost.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Repost</div>
   <div><img src="./assset/send.png" alt="" style="width: 30px ; height: 30px;">&ThinSpace;Send</div>
 
 </div>
 <div class="postCommentLastDiv">
-  <img src=" ${profilePicLocal} || ./assset/profile.png" alt="" />
+  <img src=" ${profilePicLocal || "./assset/profile.png"}" alt="" />
   <input type="text" placeholder="Write a comment..." />
   <button>Post</button>
 </div>
 `;
+
     postDiv.appendChild(div1);
 
     placeholderName.value = "";
+  
   });
+}
+window.likeHandler =likeHandler
+async function likeHandler(postId){
+  
+  const likeCounter = document.querySelector(".likeCounter");
+  console.log(likeCounter)
+  let count = (likeCounter.innerHTML *1) +1
+
+  const washingtonRef = doc(db, "posts", postId);
+
+ // Set the "capital" field of the city 'DC'
+   await updateDoc(washingtonRef, {
+    likeCount:count
+});
+getPosts();
+
+  
 }
 
 //      ////////////                      Delete Post           ////////////////////
@@ -501,7 +582,7 @@ async function getAuthorData(authorUid) {
     return docSnap.data();
   } else {
     // docSnap.data() will be undefined in this case
-    console.log("No such document!");
+    // console.log("No such document!");
   }
 }
 
